@@ -1,124 +1,124 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct ContentView: View {
-    
-    let store = Store<ComponentView.State, ComponentAction>(initialState: .init(tag: 0, stringTag: "0"), reducer: componentReducer, environment: ())
-    
-    var body: some View {
-        List {
-            Section {
-                Button("Test") {
-                    ViewStore(store).send(.test)
-                }
-            }
-            ComponentView(store: store)
-                .fixedSize()
-        }
-    }
+struct ComponentState: Equatable {
+    var message: String = "X"
+    var changesCount: Int = 0
 }
 
-let componentReducer = Reducer<ComponentView.State, ComponentAction, ()> { state, action, _ in
+let componentReducer = Reducer<ComponentState, ComponentAction, ()> { state, action, _ in
     switch action {
-    case .test:
-        state.tag += 1
-        state.stringTag = "\(state.tag)"
+    case .change:
+        state.message.append("X")
+        state.changesCount += 1
     }
     return .none
 }
 
 enum ComponentAction {
-    case test
+    case change
 }
 
-var observedViewStore: ViewStore<ComponentView.State, ComponentAction>?
-
-struct ComponentView: View {
+struct ContentView: View, Traceable {
     
-    struct State: Equatable {
-        var tag: Int
-        var stringTag: String
-    }
-    
-    let store: Store<State, ComponentAction>
+    let store = Store<ComponentState, ComponentAction>(initialState: .init(), reducer: componentReducer, environment: ())
     
     var body: some View {
-        let _ = Self._printChanges()
         WithViewStore(store) { viewStore in
-            let _ = dump(viewStore.tag, name: "viewStore.tag")
+            List {
+                Section {
+                    Button("Trigger change (Add another 'X' to the text)") {
+                        print("\n=== Triggering Change: \(viewStore.changesCount + 1) ===\n")
+                        viewStore.send(.change)
+                    }
+                }
+                Section {
+                    Text("Changes triggered: \(viewStore.changesCount)")
+                }
+                ComponentView(store: store)
+                    .fixedSize()
+            }
+        }
+    }
+}
+
+struct ComponentView: View, Traceable {
+
+    let store: Store<ComponentState, ComponentAction>
+    
+    static var observedViewStore: ViewStore<ComponentState, ComponentAction>?
+    
+    var body: some View {
+        let _ = dump((), name: "-")
+        WithViewStore(store) { viewStore in
+            let _ = dump(viewStore.message, name: "viewStore.message")
             let _ = Self._printChanges()
-            let _ = assert((observedViewStore == nil) || (observedViewStore === viewStore))
+            
+            // Double-check that viewStore remains the same:
             let _ = dump(String(format: "%p", unsafeBitCast(viewStore, to: Int.self)), name: "viewStore", maxDepth: 1)
-            let _ = observedViewStore = viewStore
+            let _ = assert((Self.observedViewStore == nil) || (Self.observedViewStore === viewStore))
+            let _ = Self.observedViewStore = viewStore
             
             Section(header: Text("Reference")) {
                 HStack {
-                    Text("Text(viewStore.tag)")
-                    Text("\(viewStore.tag)")
+                    Text("Text(viewStore.message)")
+                    Text(viewStore.message)
                 }
             }
             Section(header: Text("Problems")) {
                 HStack {
-                    Text("PlaintText({ viewStore.tag }):")
-                    PlainText(text: { "\(viewStore.tag)" })
+                    Text("PlainText({ viewStore.message }):")
+                    PlainText({ viewStore.message })
                 }
                 HStack {
-                    Text("PlaintText({ viewStore.stringTag }):")
-                    PlainText(text: { viewStore.stringTag })
+                    Text("PlainText({ viewStore.state.message }):")
+                    PlainText({ viewStore.state.message })
                 }
                 HStack {
-                    Text("PlaintText({ viewStore.state.stringTag }):")
-                    PlainText(text: { viewStore.state.stringTag })
-                }
-                HStack {
-                    Text("FancyTextAlignment({ Text(viewStore.stringTag) }):")
-                    FancyTextAlignment(
-                        content: {
-                            Text(viewStore.stringTag)
-                        }
-                    )
+                    Text("FancyTextWrapper { Text(viewStore.message) }:")
+                    FancyTextWrapper {
+                        Text(viewStore.message)
+                    }
                 }
             }
             Section(header: Text("Workarounds")) {
-                let tag = viewStore.tag
+                let state = viewStore.state
                 
                 HStack {
-                    Text("PlaintText({ tag }):")
-                    PlainText(text: { "\(tag)" })
+                    Text("PlainText({ state.message }):")
+                    PlainText({ state.message })
+                }
+
+                let tag = state.message // Whatever value different for different states
+
+                HStack {
+                    Text("PlainTextWithTag(tag, { viewStore.state.message }):")
+                    PlainTextWithTag(tag, { viewStore.message })
                 }
                 HStack {
-                    Text("PlaintText(tag, { viewStore.tag }):")
-                    PlainText(tag: tag, text: { "\(viewStore.tag)" })
+                    Text("PlainTextWithTag(tag, { viewStore.message }):")
+                    PlainTextWithTag(tag, { viewStore.message })
                 }
+                
                 HStack {
-                    Text("PlaintText(tag, { viewStore.stringTag }):")
-                    PlainText(tag: tag, text: { viewStore.stringTag })
-                }
-                HStack {
-                    Text("PlaintText(tag, { tag }):")
-                    PlainText(tag: tag, text: { "\(tag)" })
-                }
-                HStack {
-                    Text("FancyAlignment<Text>({ Text(viewStore.stringTag) }):")
-                    FancyAlignment<Text>(
-                        content: {
-                            Text(viewStore.state.stringTag)
-                        }
-                    )
+                    Text("FancyWrapper<Text> { Text(viewStore.message) }:")
+                    FancyWrapper<Text> {
+                        Text(viewStore.message)
+                    }
                 }
             }
-        }.debug().fixedSize()
+        }.debug(dumpPrefix()).fixedSize()
     }
 }
 
-struct PlainText: View {
-    let tag: Int
+// MARK: - Views -
+
+struct PlainText: View, Traceable {
     let text: () -> String
     
-    init(tag: Int = 0, text: @escaping () -> String) {
-        print(#function)
-        self.tag = tag
+    init(_ text: @escaping () -> String) {
         self.text = text
+        dump(self, name: "self")
     }
     
     var body: some View {
@@ -127,7 +127,29 @@ struct PlainText: View {
     }
 }
 
-struct FancyAlignment<Content: View>: View {
+struct PlainTextWithTag<Tag>: View, Traceable {
+    let tag: Tag
+    let text: () -> String
+    
+    init(_ tag: Tag, _ text: @escaping () -> String) {
+        self.tag = tag
+        self.text = text
+        dump(self, name: "self")
+    }
+    
+    var body: some View {
+        let _ = Self._printChanges()
+        Text(text())
+    }
+}
+
+struct FancyWrapper<Content: View>: View, Traceable {
+    
+    init(content: @escaping () -> Content) {
+        self.content = content
+        dump(self, name: "self")
+    }
+    
     @ViewBuilder
     let content: () -> Content
     
@@ -137,7 +159,13 @@ struct FancyAlignment<Content: View>: View {
     }
 }
 
-struct FancyTextAlignment: View {
+struct FancyTextWrapper: View, Traceable {
+    
+    init(content: @escaping () -> Text) {
+        self.content = content
+        dump(self, name: "self")
+    }
+
     @ViewBuilder
     let content: () -> Text
     
