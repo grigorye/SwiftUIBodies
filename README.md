@@ -46,7 +46,9 @@ var body: some View {
 }
 ```
 
-## Demo
+Another workaround would be "mirroring" every (state) property used in the closure, as a property of the child view, but it would basically obliterate the usefulness of the closure.
+
+## The app
 
 Run the app, preferably on iPad.
 
