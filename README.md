@@ -1,6 +1,6 @@
 # SwiftUIBodies
 
-A demo of problems/workarounds for Swift UI code that deals with The Composable Architecture and closure-based content generators in child views.
+A demo of problems/workarounds for Swift UI code that deals with [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) and closure-based content generators in child views.
 
 # What
 
@@ -17,7 +17,7 @@ struct PlainText: View {
 
 struct ComponentView: View {
 
-    let store: Store<ComponentView.State, ComponentAction>
+    let store: Store<ComponentState, ComponentAction>
 
     struct State: Equatable {
         var message: String
@@ -31,7 +31,7 @@ struct ComponentView: View {
 }
 ```
 
-While it looks innocent (though a bit uneasy due to use of closure to generate the content), it won't trigger updates in the rendered part for PlainText, even though everything is fine from perspective of The Composable Architecture .
+While it looks innocent (though a bit uneasy due to use of closure to generate the content), when the message is changed in the state, it won't trigger updates in the rendered part for PlainText, even though everything is fine from perspective of The Composable Architecture .
 
 The problem lies within the closure and its use as a property in PlainText. The closure captures **only** `viewStore` **reference**, and literally remains the same when state is changed, as `viewStore` is never changed between the invocations. Hence whatever magic exists behind the SwiftUI renderer, it optimizes the corresponding view as not changed, because literally all the values for PlainText are equal in this case, even though the corresponding state is changing (no, mere mortals can't compare closures in Swift, so it's a bit of stretch, though the one that provides the explanation).
 
@@ -57,5 +57,3 @@ After five changes:
 ![](./SwiftUIBodiesRun.png)
 
 [Log for the above scenario](./SwiftUIBodiesRun.log)
-
-
