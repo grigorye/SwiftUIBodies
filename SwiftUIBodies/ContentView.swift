@@ -145,12 +145,11 @@ struct PlainTextWithTag<Tag>: View, Traceable {
 
 struct FancyWrapper<Content: View>: View, Traceable {
     
-    init(content: @escaping () -> Content) {
+    init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content
         dump(self, name: "self")
     }
     
-    @ViewBuilder
     let content: () -> Content
     
     var body: some View {
@@ -161,12 +160,11 @@ struct FancyWrapper<Content: View>: View, Traceable {
 
 struct FancyTextWrapper: View, Traceable {
     
-    init(content: @escaping () -> Text) {
+    init(@ViewBuilder content: @escaping () -> Text) {
         self.content = content
         dump(self, name: "self")
     }
 
-    @ViewBuilder
     let content: () -> Text
     
     var body: some View {
