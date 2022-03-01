@@ -2,6 +2,8 @@
 
 A demo of problems/workarounds for Swift UI code that deals with [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) and closure-based content generators in child views.
 
+The issue in TCA: https://github.com/pointfreeco/swift-composable-architecture/issues/1011
+
 # What
 
 Consider the following example:
