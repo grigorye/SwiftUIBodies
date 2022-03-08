@@ -6,17 +6,21 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: X
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "X", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "X", text: (Function))
 FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 PlainText: @self changed.
 PlainText: @self changed.
+PlainText: @self changed.
 FancyTextWrapper: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
@@ -33,10 +37,12 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: XX
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XX", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XX", text: (Function))
@@ -44,6 +50,8 @@ FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 FancyWrapper: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
+PlainText: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
 
 === Triggering Change: 2 ===
@@ -57,10 +65,12 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: XXX
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXX", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXX", text: (Function))
@@ -68,6 +78,7 @@ FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 FancyWrapper: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
 
 === Triggering Change: 3 ===
@@ -81,10 +92,12 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: XXXX
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXX", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXX", text: (Function))
@@ -92,6 +105,7 @@ FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 FancyWrapper: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
 
 === Triggering Change: 4 ===
@@ -105,10 +119,12 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: XXXXX
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXXX", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXXX", text: (Function))
@@ -116,6 +132,7 @@ FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 FancyWrapper: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
 
 === Triggering Change: 5 ===
@@ -129,10 +146,12 @@ ComponentView.body: WithViewStore<ComponentState, ComponentAction, _>@SwiftUIBod
   )
 ComponentView.body: viewStore.message: XXXXXX
 ComponentView: unchanged.
-ComponentView.body: viewStore: 0x600002c294c0
+ComponentView.body: viewStore: 0x600001fac900
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 FancyTextWrapper.init(content:): self: FancyTextWrapper(content: (Function))
+PlainText.init(_:): self: PlainText(text: (Function))
 PlainText.init(_:): self: PlainText(text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXXXX", text: (Function))
 PlainTextWithTag<String>.init(_:_:): self: PlainTextWithTag<String>(tag: "XXXXXX", text: (Function))
@@ -140,4 +159,5 @@ FancyWrapper<Text>.init(content:): self: FancyWrapper<Text>(content: (Function))
 FancyWrapper: @self changed.
 PlainTextWithTag: @self changed.
 PlainTextWithTag: @self changed.
+PlainText: @self changed.
 PlainText: @self changed.
