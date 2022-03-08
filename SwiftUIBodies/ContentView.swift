@@ -70,6 +70,11 @@ struct ComponentView: View, Traceable {
                     Text("PlainText({ viewStore.message }):")
                     PlainText({ viewStore.message })
                 }
+                let taggedGeneratorWith0 = TaggedGenerator(viewStore: viewStore, tag: 0)
+                HStack {
+                    Text("PlainText({ taggedGeneratorWith0.message() }):")
+                    PlainText({ taggedGeneratorWith0.message() })
+                }
                 HStack {
                     Text("PlainText({ viewStore.state.message }):")
                     PlainText({ viewStore.state.message })
@@ -91,6 +96,11 @@ struct ComponentView: View, Traceable {
 
                 let tag = state.message // Whatever value different for different states
 
+                let taggedGeneratorWithTag = TaggedGenerator(viewStore: viewStore, tag: tag)
+                HStack {
+                    Text("PlainText({ taggedGeneratorWithTag.message }):")
+                    PlainText({ taggedGeneratorWithTag.message() })
+                }
                 HStack {
                     Text("PlainTextWithTag(tag, { viewStore.state.message }):")
                     PlainTextWithTag(tag, { viewStore.message })
@@ -108,6 +118,15 @@ struct ComponentView: View, Traceable {
                 }
             }
         }.debug(dumpPrefix()).fixedSize()
+    }
+}
+
+struct TaggedGenerator<Tag> {
+    let viewStore: ViewStore<ComponentState, ComponentAction>
+    let tag: Tag
+    
+    func message() -> String {
+        viewStore.message
     }
 }
 
